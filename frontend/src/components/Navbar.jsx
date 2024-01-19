@@ -1,5 +1,8 @@
 import React from "react";
+import { Link, Outlet } from "react-router-dom";
 import UserNavBar from "./user/UserNavBar.jsx";
+import { useContext, createContext, useState } from "react";
+
 import {
   IconBaselineDensityMedium,
   IconBellRinging,
@@ -7,12 +10,14 @@ import {
   IconCheckbox,
   IconCoin,
 } from "@tabler/icons-react";
+import { AlignJustify } from "lucide-react";
 import logo1 from "../assets/catFavi.png";
 import Avt1 from "../assets/avatar/avatarchungfb.jpg";
 import ToDoPage from "../pages/ToDoPage.jsx";
 import HabitPage from "../pages/HabitPage.jsx";
 import MoneyPage from "../pages/MoneyPage.jsx";
-import { Link, Outlet } from "react-router-dom";
+
+import Sidebar from "./SideBar.jsx";
 
 const Navbar = () => {
   return (
@@ -23,7 +28,7 @@ const Navbar = () => {
             {/* Logo and Menu */}
             <div className="flex items-center">
               {/* Menu Icon */}
-              <IconBaselineDensityMedium className="h-5 w-6 ml-2 cursor-pointer" />
+              <AlignJustify className="h-5 w-6 ml-2 cursor-pointer" />
               {/* Logo */}
               <Link to="/app">
                 <div className="flex items-center mr-5">
@@ -36,7 +41,7 @@ const Navbar = () => {
               <div className="flex items-center myoptions ">
                 {/* ==================================| ToDo |================================== */}
                 <Link to="/app/todo">
-                  <button className="bg-white hover:bg-gray-50 text-gray-800  py-1 px-2 border border-gray-200 rounded shadow ">
+                  <button className=" bg-white hover:bg-gray-50 text-gray-800  py-1 px-2 border border-gray-200 rounded shadow ">
                     <div className="flex justify-center items-center">
                       <IconCheckbox className="h5 w-5 opacity-55 hover:opacity-85" />
                     </div>
