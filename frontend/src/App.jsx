@@ -19,7 +19,7 @@ const App = () => {
     <>
       <div className="bg-chung-light-grey2">
         {/* <Navbar /> */}
-        <Navbar />
+
         {/* SideBar */}
         {/* <SideBar>
           <SidebarItem
@@ -40,7 +40,9 @@ const App = () => {
           <SidebarItem icon={<Settings size={20} />} text="Settings" />
           <SidebarItem icon={<LifeBuoy size={20} />} text="Help" />
         </SideBar> */}
+        <Navbar />
         <Outlet />
+        {/* <p>app</p> */}
       </div>
     </>
   );
