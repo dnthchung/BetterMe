@@ -24,11 +24,11 @@ const Navbar = () => {
     <>
       <div className="mynav">
         {/* <div className=""> */}
-        <nav className="bg-white p-3 text-black flex justify-between items-center border-b border-red-300">
+        <nav className="bg-white p-3 text-black flex justify-between items-center border-b border-gray-200">
           {/* Logo and Menu */}
           <div className="flex items-center">
             {/* Menu Icon */}
-            <AlignJustify className="h-5 w-6 ml-2 cursor-pointer" />
+            {/* <AlignJustify className="h-5 w-6 ml-2 cursor-pointer" /> */}
             {/* Logo */}
             <Link to="/app">
               <div className="flex items-center mr-5">

@@ -3,11 +3,74 @@ import { useState } from "react";
 import { Plus, MoreVertical, PencilLine, X, CalendarPlus } from "lucide-react";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 
+//ant
+import { DatePicker, Space, TimePicker, Input } from "antd";
+const { TextArea } = Input;
+
+const DateTimePicker = ({ onDateTimeChange }) => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    onDateTimeChange(combineDateTime(date, selectedTime));
+  };
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+    onDateTimeChange(combineDateTime(selectedDate, time));
+  };
+
+  const handleDateClear = () => {
+    setSelectedDate(null);
+    onDateTimeChange(combineDateTime(null, selectedTime));
+  };
+
+  const handleTimeClear = () => {
+    setSelectedTime(null);
+    onDateTimeChange(combineDateTime(selectedDate, null));
+  };
+
+  const combineDateTime = (date, time) => {
+    const formattedDate = date ? date.format("YYYY-MM-DD") : "";
+    const formattedTime = time ? time.format("HH:mm:ss") : "";
+    return `${formattedDate} ${formattedTime}`;
+  };
+
+  return (
+    <Space>
+      <DatePicker
+        value={selectedDate}
+        onChange={handleDateChange}
+        onClear={handleDateClear}
+      />
+      <TimePicker
+        value={selectedTime}
+        onChange={handleTimeChange}
+        onClear={handleTimeClear}
+        format="HH:mm:ss"
+      />
+    </Space>
+  );
+};
+
 const ToDoPage = () => {
   const [newToDo, setNewToDo] = useState();
   const [isChecked, setIsChecked] = useState(false);
   const [isStarChecked, setIsStarChecked] = useState(false);
   const [isIconChanged, setIsIconChanged] = useState(false);
+  const [dateTime, setDateTime] = useState("");
+
+  //handle text too long
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? `${text.slice(0, maxLength)} ... ` : text;
+  };
+  //handle time picker
+  const handleDateTimeChange = (value) => {
+    setDateTime(value);
+    console.log(value);
+  };
+
   //handle checkbox
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -38,7 +101,7 @@ const ToDoPage = () => {
                 </div>
                 <hr />
               </div>
-              {/* add task */}
+              {/* =============== add task =======================*/}
               <div className="collapse bg-white mt-[10px] ">
                 <input type="checkbox" onClick={handleIconCheck} />
                 {/* add todo button */}
@@ -52,44 +115,18 @@ const ToDoPage = () => {
                   </div>
                 </div>
                 <div className="collapse-content mt-1 grid grid-cols-4 ">
+                  {/* item ======================= */}
                   {/* title */}
-                  <div className="relative h-11 w-fit min-w-[100px] col-span-1">
-                    <div class="absolute grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
-                      <PencilLine
-                        Plus
-                        className="h5 w-5 opacity-55 hover:opacity-85"
-                      />
-                    </div>
-                    <input
-                      placeholder="Title"
-                      className="peer h-full w-fit border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100"
-                    />
-                    <label className="after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                      Title
-                    </label>
+                  <div className="relative w-full min-w-[150px] h-10 col-start-1">
+                    <Input placeholder="Title" />
                   </div>
-                  <div className="relative h-11 w-fit min-w-[100px] col-start-3">
-                    <div class="absolute grid w-5 h-5 place-items-center text-blue-gray-500 top-2/4 right-3 -translate-y-2/4">
-                      <CalendarPlus className="h5 w-5 opacity-55 hover:opacity-85" />
-                    </div>
-                    <input
-                      placeholder="Date"
-                      className="peer h-full w-fit border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100"
-                    />
-                    <label className="after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-blue-gray-500 peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                      Date
-                    </label>
+                  <div className="relative w-full min-w-[150px] h-10 col-start-1 mb-4">
+                    <TextArea placeholder="Detail" />
                   </div>
 
-                  {/* date pick */}
-
-                  {/* calendar option=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-======================= */}
-                  {/* <button className="bg-white hover:bg-gray-50 text-gray-800 py-1 px-2 border border-gray-200 rounded shadow mt-2">
-                    <CalendarPlus className="h5 w-5 opacity-55 hover:opacity-85" />
-                  </button> */}
-                  {/* <kbd className="kbd kbd-xs bg-chung-light-grey2 text-gray-500">
-                    10/06/2003 12:50 a.m
-                  </kbd> */}
+                  <div className="relative h-10 w-full min-w-[500px] col-start-1 mt-2">
+                    <DateTimePicker onDateTimeChange={handleDateTimeChange} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,6 +167,7 @@ const ToDoPage = () => {
                   </div>
                 </div>
               </div>
+              {/* to-do 2 */}
               <div className="mytodo grid grid-cols-4 -mx-3 p-2 hover:bg-slate-100 ">
                 {/* check box & content*/}
                 <div
@@ -139,12 +177,22 @@ const ToDoPage = () => {
                 >
                   <input
                     type="checkbox"
-                    className="checkbox size-5 border border-solid border-gray-300 mr-3 "
+                    className="checkbox size-5 border border-solid border-gray-300 mr-3"
                     onChange={handleCheckboxChange}
                   />
-                  <p className="text-chung-text1">Mua bimbim</p>
+                  <div className="">
+                    <p className="text-chung-text1">Mua bimbim</p>
+                    <p
+                      className="text-gray-500 text-sm"
+                      style={{ whiteSpace: "nowrap" }}
+                    >
+                      {truncateText(
+                        "Mua bimbim ow so nha 135 bac tinhnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+                        35
+                      )}
+                    </p>
+                  </div>
                 </div>
-
                 {/* dropdown option */}
                 <div className="mytodooption col-start-7 flex w-fit">
                   <div className="option-container hover:rounded-full btn-ghost h-fit w-fit">
