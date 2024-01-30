@@ -39,6 +39,12 @@ const Navbar = () => {
 
             {/* Option */}
             <div className="flex items-center myoptions ">
+              {/* ==================================| ToDo test |================================== */}
+              <Link to="/app/todotest">
+                <button className=" bg-white hover:bg-gray-50 text-gray-800  py-1 px-2 border border-gray-200 rounded shadow ">
+                  <IconBellRinging className="h5 w-5 opacity-55 hover:opacity-85" />
+                </button>
+              </Link>
               {/* ==================================| ToDo |================================== */}
               <Link to="/app/todo">
                 <button className=" bg-white hover:bg-gray-50 text-gray-800  py-1 px-2 border border-gray-200 rounded shadow ">

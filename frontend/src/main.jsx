@@ -6,12 +6,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ToDoPage from "./pages/ToDoPage.jsx";
 import HabitPage from "./pages/HabitPage.jsx";
 import MoneyPage from "./pages/MoneyPage.jsx";
+import ToDoTest from "./pages/ToDoPageTest.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/app" element={<App />}>
+          <Route path="/app/todotest" element={<ToDoTest />} />
           <Route path="/app/todo" element={<ToDoPage />} />
           <Route path="/app/habit" element={<HabitPage />} />
           <Route path="/app/money" element={<MoneyPage />} />
